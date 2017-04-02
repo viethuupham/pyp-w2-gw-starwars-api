@@ -36,7 +36,7 @@ class PeopleQuerySetTestCase(BaseStarWarsAPITestCase):
         obj = qs.next()
         self.assertTrue(isinstance(obj, People))
         self.assertEqual(obj.name, 'Luke Skywalker')
-
+        
     @responses.activate
     def test_people_qs_iterable(self):
         qs = People.all()
@@ -46,3 +46,20 @@ class PeopleQuerySetTestCase(BaseStarWarsAPITestCase):
     def test_people_qs_count(self):
         qs = People.all()
         self.assertEqual(qs.count(), 15)
+    
+    @responses.activate
+    def test_people_qs_next_film(self):
+        qs = Films.all()
+        obj = qs.next()
+        self.assertTrue(isinstance(obj, Films))
+        self.assertEqual(obj.title, "A New Hope")
+    
+    @responses.activate
+    def test_people_qs_iterable_film(self):
+        qs = Films.all()
+        self.assertEqual(len([elem for elem in qs]), 7) 
+
+    @responses.activate
+    def test_people_qs_count_film(self):
+        qs = Films.all()
+        self.assertEqual(qs.count(), 7)
